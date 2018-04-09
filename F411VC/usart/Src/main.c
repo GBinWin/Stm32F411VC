@@ -38,16 +38,14 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f4xx_hal.h"
-
+#include "GUI.h"
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
-
 RTC_HandleTypeDef hrtc;
-
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
@@ -86,14 +84,20 @@ extern void LCD_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-	uint16_t AD_Value = 0;			//ƒ⁄≤øŒ¬∂»∂¡»° π”√
-	extern uint16_t DeviceCode;	//LCD øÿ÷∆∆˜ID
-	RTC_DateTypeDef date;				//»’∆⁄Ω·ππÃÂ±‰¡ø
-	RTC_TimeTypeDef time;				// ±º‰Ω·ππÃÂ±‰¡ø
+	uint16_t AD_Value = 0;			//ÂÜÖÈÉ®Ê∏©Â∫¶ËØªÂèñ‰ΩøÁî®
+	extern uint16_t DeviceCode;	//LCD ÊéßÂà∂Âô®ID
+//	RTC_DateTypeDef date;				//Êó•ÊúüÁªìÊûÑ‰ΩìÂèòÈáè
+//	RTC_TimeTypeDef time;				//Êó∂Èó¥ÁªìÊûÑ‰ΩìÂèòÈáè
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
+//void MainTask(void) {
+//  GUI_Clear();
+//	GUI_SetColor(GUI_RED);
+//	GUI_SetFont(&GUI_Font16_1);
+//	GUI_DispString ("Hello PaoHuaHello PaoHua Hello");
+//  while(1);
+//}
 /* USER CODE END 0 */
 
 /**
@@ -127,24 +131,20 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
 //  MX_ADC1_Init();
-//  MX_RTC_Init();
+  //MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-	LCD_Init();
+	__HAL_RCC_CRC_CLK_ENABLE();
+	//GUI_Init();
 	printf(">hello stm32f411vc..\r\n");
-	printf(">SystemCoreClock is %dMHz\r\n",SystemCoreClock/1000/1000);	//¥Ú”°œµÕ≥ ±÷”
-	printf(">LCD DeviceCode is%d\n\r",DeviceCode);
+	printf(">SystemCoreClock is %dMHz\r\n",SystemCoreClock/1000/1000);	//ÊâìÂç∞Á≥ªÁªüÊó∂Èíü
+	printf(">LCD DeviceCode is %d\n\r",DeviceCode);
+	MainTask();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1){
+  //while (1){
 		
-		LCD_Clear(0x0000);
-		HAL_Delay(500);
-		LCD_Clear(0x001F);
-		HAL_Delay(500);
-		LCD_Clear(0xFFE0);
-		HAL_Delay(500);
   /* USER CODE END WHILE */	
   /* USER CODE BEGIN 3 */
 //		HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
@@ -152,20 +152,20 @@ int main(void)
 //		printf("%02d/%02d/%02d\r\n",2000 + date.Year, date.Month, date.Date); 
 //    printf("%02d:%02d:%02d\r\n",time.Hours, time.Minutes, time.Seconds);
 //		
-//		HAL_ADC_Start(&hadc1);												//ø™∆ÙADC
-//		HAL_ADC_PollForConversion(&hadc1, 50);				//µ»¥˝◊™ªª
+//		HAL_ADC_Start(&hadc1);												//ÂºÄÂêØADC
+//		HAL_ADC_PollForConversion(&hadc1, 50);				//Á≠âÂæÖËΩ¨Êç¢
 //  /* Check if the continous conversion of regular channel is finished */  
 //		if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1), HAL_ADC_STATE_REG_EOC)){
 //        
 //			AD_Value = HAL_ADC_GetValue(&hadc1);
-//			printf("MCU Temperature : %.1f\r\n",((AD_Value*3300/4096-760)/2.5+25));	//Œ¬∂»º∆À„π´ Ω
+//			printf("MCU Temperature : %.1f\r\n",((AD_Value*3300/4096-760)/2.5+25));	//Ê∏©Â∫¶ËÆ°ÁÆóÂÖ¨Âºè
 //		}
-		
+//		
 //		HAL_GPIO_TogglePin( GPIOD,GPIO_PIN_11);
 //		HAL_Delay(500);
 //		HAL_GPIO_TogglePin( GPIOD,GPIO_PIN_12);
 //		HAL_Delay(500);
-  }
+  //}
   /* USER CODE END 3 */
 
 }
